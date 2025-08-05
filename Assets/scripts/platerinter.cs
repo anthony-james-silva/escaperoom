@@ -10,15 +10,16 @@ public class platerinter : MonoBehaviour
 
     
     public float playerActionDistance;
-
+    
     public string[] newOptions;
-    [SerializeField] private GameObject dropDown;
+    public GameObject dropDown;
     [SerializeField] private GameObject EKeyImage;
     [SerializeField] private GameObject readImage;
     [SerializeField] private string key;
 
     public string interactibleType;
 
+    
     private KeyCode keyCode;
 
     bool raycastResult;
@@ -36,11 +37,13 @@ public class platerinter : MonoBehaviour
         reading = false;
         gm = GameObject.Find("gameman").GetComponent<gameman>();
         EKeyImage.GetComponent<TextMeshProUGUI>().text = key;
-        Debug.Log("Key set to: " + key);       
+        Debug.Log("Key set to: " + key);
         EKeyImage.SetActive(false);
         keyCode = (KeyCode)System.Enum.Parse(typeof(KeyCode), key, true);
-        
+
         readImage.SetActive(false);
+        
+        
     }
 
     // Update is called once per frame
@@ -88,8 +91,8 @@ public class platerinter : MonoBehaviour
                         EKeyImage.SetActive(false);
                         Cursor.lockState = CursorLockMode.None;
                         Cursor.visible = true;
-                        dropDown.GetComponent<TMP_Dropdown>().ClearOptions();
-                        dropDown.GetComponent<TMP_Dropdown>().AddOptions(newOptions.OfType<string>().ToList());
+                        dotings(dropDown.transform);
+                        
 
                     }
                 }
@@ -109,4 +112,14 @@ public class platerinter : MonoBehaviour
 
         
     }
+    void dropdownthing(Transform hi){
+        hi.GetComponent<TMP_Dropdown>().ClearOptions();
+        hi.GetComponent<TMP_Dropdown>().AddOptions(newOptions.OfType<string>().ToList());
+    }
+    void dotings(Transform listpar){    
+        foreach (Transform child in listpar){
+            dropdownthing(child);
+        }
+    }
+                        
 }
